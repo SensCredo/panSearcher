@@ -1,2 +1,9 @@
 # panSearcher
-网盘资源搜索（采用Spring+SpringMVC+MyBatis框架）
+
+## 网盘资源搜索（采用Spring+SpringMVC+MyBatis框架）<br>
+可实现对现有公开分享的网盘资源的搜索与展示（数据爬取来源为百度贴吧，暂时支持百度网盘与微盘资源的搜索），搜索界面如下<br>
+
+
+### 使用注意
+
+#### 1、项目
