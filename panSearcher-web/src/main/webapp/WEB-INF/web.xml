@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+  <display-name>panSearcher</display-name>	
+  
+  <!-- 指定 Spring配置文件的位置及其名称-->
+  <context-param>
+  	<param-name>contextConfigLocation</param-name>
+  	<param-value>classpath*:Spring-*.xml</param-value>
+  </context-param>
+  
+  <!-- 注册ServletContext监听器 -->
+  <listener>
+  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  
+  <!--注册SpringMVC中央调度器-->
+  <servlet>
+  	<servlet-name>SpringMVC</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  	<!--指定SpringMVC配置文件的位置及文件名-->
+  	<init-param>
+  		<param-name>contextConfigLocation</param-name>
+  		<param-value>classpath:Spring-mvc.xml</param-value>
+  	</init-param>
+  	<!--在Tomcat启动时创建当前servlet-->
+  	<load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>SpringMVC</servlet-name>
+  	<url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 注册spring内置字符集过滤器 -->                  
+  <filter>
+  	<filter-name>CharacterEncodingFilter</filter-name>
+  	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+  	<!-- 指定编码类型 -->
+  	<init-param>
+  		<param-name>encoding</param-name>
+  		<param-value>UTF-8</param-value>
+  	</init-param>
+  	<!-- 是否强制编码 -->
+  	<init-param>
+  		<param-name>forceEncoding</param-name>
+  		<param-value>true</param-value>
+  	</init-param>
+  </filter>
+  <filter-mapping>
+  	<filter-name>CharacterEncodingFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  <welcome-file-list>
+    <welcome-file>search.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>

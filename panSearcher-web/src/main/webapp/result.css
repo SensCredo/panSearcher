@@ -1,0 +1,20 @@
+td {
+	font-family: "»ªÎÄÖĞËÎ";
+	font-size: 18px;
+}
+#head {
+	font-family: "Î¢ÈíÑÅºÚ";
+	font-size: 24px;
+	background-color: #E3E3E3;
+	height:36px
+}
+#statement {
+	font-family: "Ó×Ô²";
+}
+#count {
+	color: #F00;
+}
+#pageChoose	{
+	position: fixed;
+	bottom: 35px;
+}

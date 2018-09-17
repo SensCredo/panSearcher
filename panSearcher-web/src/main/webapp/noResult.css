@@ -1,0 +1,36 @@
+@charset "utf-8";
+
+
+#err_div {
+	position: fixed;
+	right: 45%;
+}
+#err_div p1 {
+	font-family: "华文细黑";
+	font-size: 24px;
+}
+#err_div ul li {
+	font-family: "微软雅黑";
+}
+#err_div p {
+	font-family: "微软雅黑";
+}
+#err_div    a{
+	font-family: "微软雅黑";
+	font-size: 18px;
+}
+#err_div    a:link {
+    color:#505050;
+    }
+#err_div    a:visited {
+    color:#505050;
+    }
+#err_div    a:hover {
+    color:#505050;
+    }
+#err_div    a:active {
+	color: #505050;
+    }
+body {
+	background-color: #f7f7f7;
+}
