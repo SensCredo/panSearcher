@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<!--定义类型别名-->
+	<typeAliases>
+		<package name="com.yz.pssBeans"/>
+	</typeAliases>
+
+	
+	<!--注册映射文件-->
+	<mappers>
+		<mapper resource="com/yz/pssDao/panMapper.xml"/>
+	</mappers>
+</configuration>

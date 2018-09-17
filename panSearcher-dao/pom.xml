@@ -1,0 +1,55 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>panSearcher-parent</artifactId>
+    <groupId>com.yz</groupId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>com.yz</groupId>
+  <artifactId>panSearcher-dao</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <dependencies>
+  	<!-- Mybatis -->
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis-spring</artifactId>
+			</dependency>
+			<!-- MySql -->
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+			</dependency>
+			<!-- 连接池 -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+			</dependency>
+			<!-- 项目依赖 -->
+			<dependency>
+				<groupId>com.yz</groupId>
+				<artifactId>panSearcher-beans</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<type>jar</type>
+				<scope>compile</scope>
+			</dependency>
+  </dependencies>
+  <!-- 
+  保留myBatis的映射配置文件(mapper.xml)
+  <build>
+  	<resources>
+ 		<resource>
+ 			<directory>src/main/java</directory>
+ 			<includes>
+ 				<include>**/*.properties</include>
+ 				<include>**/*.xml</include>
+ 			</includes>
+ 			<filtering>false</filtering>
+ 		</resource> 	
+  	</resources>
+  </build>
+  -->
+</project>

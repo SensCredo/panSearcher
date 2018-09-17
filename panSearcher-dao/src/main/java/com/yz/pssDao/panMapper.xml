@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yz.pssDao.PanDao">
+
+	<!--resultType为返回值所要封装的对象类型，不可省略 -->
+	<select id="selectResult" resultType="PanResult">
+		select * from panResult where searchItem=#{searchItem}
+	</select>
+	
+	<select id="selectItemByLink" resultType="String">
+		select searchItem from panResult where panUrl=#{panUrl} limit 1
+	</select>
+	
+	<select id="selectDeepthByItem" resultType="int">
+		select searchDeepth from panResult where searchItem=#{searchItem} limit 1
+	</select>
+	
+	<update id="updateDeepthByItem">
+		UPDATE panResult SET searchDeepth=#{arg0} where searchItem=#{arg1}
+	</update>
+	<!--parameterType为传入参数类型，可省略 -->
+	<insert id="addPanResult" parameterType="PanResult">
+		insert into panResult (searchItem,searchDeepth,sourceUrl,panUrl,password) values (#{searchItem},#{searchDeepth},#{sourceUrl},#{panUrl},#{password})
+	</insert>
+	
+</mapper>
