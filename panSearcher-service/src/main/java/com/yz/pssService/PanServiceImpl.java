@@ -34,16 +34,16 @@ public class PanServiceImpl implements PanService {
 
 	@Override
 	public List<PanResult> searchPan(String searchItem, int searchDeepth) throws Exception {
-		// Ê×ÏÈ´ÓÊı¾İ¿â²éÕÒ£¬ÈôÎŞ½á¹û£¬´ÓÍøÂçÖĞ½øĞĞËÑË÷
+		// é¦–å…ˆä»æ•°æ®åº“æŸ¥æ‰¾ï¼Œè‹¥æ— ç»“æœï¼Œä»ç½‘ç»œä¸­è¿›è¡Œæœç´¢
 		List<PanResult> results=dao.selectResult(searchItem);
 		int lastSearcchDeepth=0;
 		if(results.size()!=0)
-			//¶ÁÈ¡Êı¾İ¿âÖĞ¸ÃËÑË÷ÏîµÄËÑË÷Éî¶È,ÈôËÑË÷Éî¶ÈĞ¡ÓÚ¸Ã´ÎËÑË÷Éî¶È£¬Ôò´ÓÍøÂçÖĞ½øĞĞËÑË÷
+			//è¯»å–æ•°æ®åº“ä¸­è¯¥æœç´¢é¡¹çš„æœç´¢æ·±åº¦,è‹¥æœç´¢æ·±åº¦å°äºè¯¥æ¬¡æœç´¢æ·±åº¦ï¼Œåˆ™ä»ç½‘ç»œä¸­è¿›è¡Œæœç´¢
 			 lastSearcchDeepth=dao.selectDeepthByItem(searchItem);
 		if((results.size()==0)||(searchDeepth>lastSearcchDeepth)){
 			  PatternInit();
 			  Set<String> searchLink=searchLinkSelector(searchItem,searchDeepth);
-			  //Ò³ÊıÕıÔòÆ¥Åä
+			  //é¡µæ•°æ­£åˆ™åŒ¹é…
 			  String pageNumReg="class=\"red\">\\d+</span>";
 			  Pattern pageNumPat=Pattern.compile(pageNumReg);
 			  int pageDeepth=1;
@@ -56,9 +56,8 @@ public class PanServiceImpl implements PanService {
 					  	byte[] charArray = line.getBytes("GBK");
 						line=new String(charArray,"utf-8");
 						Matcher pageNumMat=pageNumPat.matcher(line);
-						//System.out.println(line);
 						if(pageNumMat.find()){
-							//Ò³Êı³¬¹ı10Ê±È¡×î´óÒ³ÃæËÑË÷ÊıÎª10
+							//é¡µæ•°è¶…è¿‡10æ—¶å–æœ€å¤§é¡µé¢æœç´¢æ•°ä¸º10
 							if(pageNumMat.group().matches("\\d\\d+"))
 								pageDeepth=10;
 							else
@@ -68,7 +67,7 @@ public class PanServiceImpl implements PanService {
 						if(result!=null){
 							result.setSearchItem(searchItem);
 							result.setSearchDeepth(searchDeepth);
-							//Èô¸Ã½á¹ûÔÚÊı¾İ¿âÖĞ²»´æÔÚ£¬Ôò½øĞĞÊı¾İ³Ö¾Ã»¯´¦Àí£¨´æ´¢ÈëÊı¾İ¿â£©
+							//è‹¥è¯¥ç»“æœåœ¨æ•°æ®åº“ä¸­ä¸å­˜åœ¨ï¼Œåˆ™è¿›è¡Œæ•°æ®æŒä¹…åŒ–å¤„ç†ï¼ˆå­˜å‚¨å…¥æ•°æ®åº“ï¼‰
 							String searchItemInDB=dao.selectItemByLink(result.getPanUrl());
 							if((searchItemInDB==null)||(!searchItemInDB.equals(searchItem))){
 								dao.addPanResult(result);
@@ -78,7 +77,7 @@ public class PanServiceImpl implements PanService {
 					}
 				  if(pageDeepth>1){
 					  for (int i = 2; i <= pageDeepth; i++) {
-						  //Èô²»Ö¹Ò»Ò³£¬¼ÌĞøËÑË÷Ê£ÓàÒ³Ãæ
+						  //è‹¥ä¸æ­¢ä¸€é¡µï¼Œç»§ç»­æœç´¢å‰©ä½™é¡µé¢
 						  link=link+"?pn="+i;
 						  URL deepUrl=new URL(link);
 						  HttpURLConnection deepConn=(HttpURLConnection) deepUrl.openConnection();
@@ -101,22 +100,22 @@ public class PanServiceImpl implements PanService {
 				  }
 			}
 			 if(lastSearcchDeepth!=0){
-				//Êı¾İ¿âÖĞsearchDeepthÏî¼ÇÂ¼ÀúÊ·×î´óËÑË÷Éî¶È
+				//æ•°æ®åº“ä¸­searchDeepthé¡¹è®°å½•å†å²æœ€å¤§æœç´¢æ·±åº¦
 					dao.updateDeepthByItem(searchDeepth,searchItem);
 			 }			
 		}
 		return results;
 	}
 	private void PatternInit() {
-		 //±ê×¼¸ñÊ½Á´½Ó
+		 //æ ‡å‡†æ ¼å¼é“¾æ¥
 		  panReg.add("pan.baidu.com/s/\\w{8}\\W");
 		  panReg.add("pan.baidu.com/s/[\\w-]{23}");
 		  panReg.add("share.weiyun.com/\\w{7}");
-		  //²¿·Ö¸ñÊ½Á´½Ó
+		  //éƒ¨åˆ†æ ¼å¼é“¾æ¥
 		  String partPanReg1="/s/\\w{8}\\W";
 		  String partPanReg2="/s/[\\w-]{23}";
-		  //ÃÜÂëÕıÔòÆ¥Åä
-		  String passwordReg="ÃÜÂë[:£º]\\s?\\w{4}";
+		  //å¯†ç æ­£åˆ™åŒ¹é…
+		  String passwordReg="å¯†ç [:ï¼š]\\s?\\w{4}";
 		  for (String reg : panReg) {
 				panPat.add(Pattern.compile(reg));
 			}
@@ -130,7 +129,7 @@ public class PanServiceImpl implements PanService {
 		searchItem=URLEncoder.encode(searchItem,"utf-8");
 		String line;
 		for(int i=1;i<=searchDeepth;i++){
-			//°´Éî¶È¶ÔËÑË÷µÃµ½µÄÍøÒ³ÒÀ´Î½øĞĞ²éÕÒ
+			//æŒ‰æ·±åº¦å¯¹æœç´¢å¾—åˆ°çš„ç½‘é¡µä¾æ¬¡è¿›è¡ŒæŸ¥æ‰¾
 			URL url=new URL("http://tieba.baidu.com/f/search/res?ie=utf-8&qw="+searchItem+"&rn=10&un=&only_thread=0&sm=1&sd=&ed=&pn="+i);
 			HttpURLConnection conn=(HttpURLConnection) url.openConnection();
 			BufferedReader context = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -138,9 +137,8 @@ public class PanServiceImpl implements PanService {
 			Pattern linkPat=Pattern.compile(linkReg);
 			while((line=context.readLine())!=null){
 				Matcher linkMat=linkPat.matcher(line);
-				//System.out.println(line);
 				while(linkMat.find()){
-					//°´°Ù¶ÈÍøÅÌ¸ñÊ½²¹È«ÍøÒ³Á´½Óºó·ÅÈësearchLink£¨Ê¹ÓÃset·ÀÖ¹»ñÈ¡ÖØ¸´Á´½Ó£©
+					//æŒ‰ç™¾åº¦ç½‘ç›˜æ ¼å¼è¡¥å…¨ç½‘é¡µé“¾æ¥åæ”¾å…¥searchLinkï¼ˆä½¿ç”¨seté˜²æ­¢è·å–é‡å¤é“¾æ¥ï¼‰
 					searchLink.add("https://tieba.baidu.com"+linkMat.group().substring(0, 13));
 				}
 			}
